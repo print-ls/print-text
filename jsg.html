@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双计算器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .calculator {
+            width: 200px;
+            border: 1px solid #000;
+        }
+
+        .result {
+            height: 50px;
+            background-color: rgb(244, 61, 11);
+            line-height: 50px;
+            font-size: 24px;
+            text-align: right;
+            padding-right: 10px;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: flex;
+        }
+
+        button {
+            flex: 1;
+            height: 40px;
+        }
+
+        .buttons>div {
+            display: flex;
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 双计算器容器 -->
+    <div class="container">
+        <!-- 第一个计算器 -->
+        <div class="calculator first">
+            <div class="result">0</div>
+            <div class="buttons">
+                <button class="AC">删除</button>
+                <button class="operators">-</button>
+                <button class="operators">%</button>
+                <button class="operators">/</button>
+            </div>
+            <div class="buttons">
+                <button class="number">7</button>
+                <button class="number">8</button>
+                <button class="operators">9</button>
+                <button class="operators">*</button>
+            </div>
+            <div class="buttons">
+                <button class="number">4</button>
+                <button class="number">5</button>
+                <button class="number">6</button>
+                <button class="operators">-</button>
+            </div>
+            <div class="buttons">
+                <button class="number">1</button>
+                <button class="number">2</button>
+                <button class="number">3</button>
+                <button class="operators">+</button>
+            </div>
+            <div class="buttons">
+                <div><button class="number">0</button></div>
+                <div>
+                    <button class="Dot">.</button>
+                    <button class="equal">=</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二个计算器 -->
+        <div class="calculator second">
+            <div class="result">0</div>
+            <div class="buttons">
+                <button class="AC">删除</button>
+                <button class="operators">-</button>
+                <button class="operators">%</button>
+                <button class="operators">/</button>
+            </div>
+            <div class="buttons">
+                <button class="number">7</button>
+                <button class="number">8</button>
+                <button class="operators">9</button>
+                <button class="operators">*</button>
+            </div>
+            <div class="buttons">
+                <button class="number">4</button>
+                <button class="number">5</button>
+                <button class="number">6</button>
+                <button class="operators">-</button>
+            </div>
+            <div class="buttons">
+                <button class="number">1</button>
+                <button class="number">2</button>
+                <button class="number">3</button>
+                <button class="operators">+</button>
+            </div>
+            <div class="buttons">
+                <div><button class="number">0</button></div>
+                <div>
+                    <button class="Dot">.</button>
+                    <button class="equal">=</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <script>
+    // 第一个计算器
+    (function () {
+        let numbers = document.querySelectorAll('.first .number');
+        let operators = document.querySelectorAll('.first .operators');
+        let result = document.querySelector('.first .result');
+        let AC = document.querySelector('.first .AC');
+        let Dot = document.querySelector('.first .Dot');
+        let equal = document.querySelector('.first .equal');
+        let isDot = false;
+        let displays = "";
+
+        numbers.forEach(number => {
+            number.onclick = function () {
+                displays += this.innerHTML;
+                result.innerHTML = displays;
+                isDot = false;
+            }
+        });
+
+        operators.forEach(operator => {
+            operator.onclick = function () {
+                displays += this.innerHTML;
+                result.innerHTML = displays;
+            }
+        });
+
+        AC.onclick = function () {
+            displays = "";
+            result.innerHTML = '0';
+        };
+
+        Dot.onclick = function () {
+            if (displays == "") {
+                displays += '0';
+                result.innerHTML = displays;
+            }
+            if (!isDot) {
+                displays += '.';
+                result.innerHTML = displays;
+                isDot = true;
+            }
+        };
+
+        equal.onclick = function () {
+            try {
+                displays = eval(displays);
+                result.innerHTML = displays;
+            } catch (e) {
+                result.innerHTML = "错误";
+                displays = "";
+            }
+        };
+    })();
+
+    // 第二个计算器
+    (function () {
+        let numbers = document.querySelectorAll('.second .number');
+        let operators = document.querySelectorAll('.second .operators');
+        let result = document.querySelector('.second .result');
+        let AC = document.querySelector('.second .AC');
+        let Dot = document.querySelector('.second .Dot');
+        let equal = document.querySelector('.second .equal');
+        let isDot = false;
+        let displays = "";
+
+        numbers.forEach(number => {
+            number.onclick = function () {
+                displays += this.innerHTML;
+                result.innerHTML = displays;
+                isDot = false;
+            }
+        });
+
+        operators.forEach(operator => {
+            operator.onclick = function () {
+                displays += this.innerHTML;
+                result.innerHTML = displays;
+            }
+        });
+
+        AC.onclick = function () {
+            displays = "";
+            result.innerHTML = '0';
+        };
+
+        Dot.onclick = function () {
+            if (displays === "" || isNaN(displays.slice(-1))) {
+                displays += "0.";
+            } else if (!isDot) {
+                displays += ".";
+            }
+            result.innerHTML = displays;
+            isDot = true;
+        };
+
+        // 修改
+        equal.onclick = function () {
+            result.innerHTML = '250';
+            displays = '250';
+        };
+    })();
+</script>
+</body>
+
+</html>
